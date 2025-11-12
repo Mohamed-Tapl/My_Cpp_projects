@@ -1,0 +1,82 @@
+//sheet 3 Q 3
+#include <iostream>
+using namespace std;
+class Student{
+private:
+    string name;
+    float age;
+    int ID;
+    double marks[5];
+    double avg;
+public:
+    Student(){
+        name="unknown";
+        age=0;
+        ID=0;
+        for(int i=0;i<5;i++){
+            marks[i]=0;
+        }
+        avg=0;
+    }
+    Student(string a,float b,int c,double d[5]){
+        name=a;
+        age=b;
+        ID=c;
+        double s=0;
+        for(int i=0;i<5;i++){
+            marks[i]=d[i];
+            s+=marks[i];
+        }
+        avg=s/5;
+    }
+    Student(Student&A){
+        name=A.name;
+        age=A.age;
+        ID=A.ID;
+        for(int i=0;i<5;i++){
+            marks[i]=A.marks[i];
+        }
+        avg=A.avg;
+    }
+    void read(){
+        cout<<"Enter Student name : ";
+        cin>>name;
+        cout<<"Enter Student Age : ";
+        cin>>age;
+        cout<<"Enter Student ID : ";
+        cin>>ID;
+        double s=0;
+        for(int i=0;i<5;i++){
+            cout<<"mark "<<i+1<<" = ";
+            cin>>marks[i];
+            s+=marks[i];
+        }
+        avg=s/5;
+    }
+    void display(){
+        cout<<"Student name : "<<name<<", Age = "<<age<<", ID = "<<ID<<", 5 marks : "<<endl;
+        for(int i=0;i<5;i++){
+            cout<<"mark "<<i+1<<" = "<<marks[i]<<endl;
+        }
+        cout<<"Average marks = "<<avg<<endl;
+        cout<<"------------------------------------------------------------\n";
+    }
+};
+int main(){
+    Student A;
+    cout<<"Enter things for student 1 : \n";
+    A.read();
+    cout<<"========================================OUTPUT======================================\n";
+    A.display();
+    cout<<"object 2 is defined by the default constructor : \n";
+    Student B;
+    B.display();
+    cout<<"object 3 is defined by initialized constructor : \n";
+    double arr[5]={50,0,22,35,55};
+    Student C("rex",33.45,4329,arr);
+    C.display();
+    cout<<"object 4 is initialized by copy constructor of object 1 : \n";
+    Student D(A);
+    D.display();
+return 0;
+}
