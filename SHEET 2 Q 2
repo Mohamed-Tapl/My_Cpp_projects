@@ -1,0 +1,67 @@
+//sheet 2 Q 2
+#include <iostream>
+using namespace std;
+int gcd(int a,int b){
+    if(b==0)
+        return a;
+    return gcd(b,a%b);
+}
+class GCD{
+private:
+    int x[30];
+    int y[30];
+    int G[30];
+    int n;
+public:
+    void read(){
+    do{
+        cout<<"Enter the number of elements (n<=30) : ";
+        cin>>n;
+    }while(n<=0||n>30)
+    cout<<"Enter Elements of X : \n";
+    for(int i=0;i<n;i++){
+        cout<<"x["<<i<<"] = ";
+        cin>>x[i];
+    }
+    cout<<"Enter Elements of y : \n";
+    for(int i=0;i<n;i++){
+        cout<<"y["<<i<<"] = ";
+        cin>>y[i];
+    }
+    for(int i=0;i<n;i++){
+        G[i]=gcd(x[i],y[i]);
+    }}
+    long long getG_sum(){
+        long long sum=0;
+        for(int i=0;i<n;i++){
+            sum+=G[i];
+        }
+    return sum;
+    }
+    void display(){
+    cout<<"The number of elements is : "<<n<<endl;
+    cout<<"\t\tIndex\t\t|\tx value\t\t|\ty value\t\t|\tG value\n";
+    for(int i=0;i<n;i++){
+        cout<<"\t\t"<<i<<"\t\t|\t"<<x[i]<<"\t\t|\t"<<y[i]<<"\t\t|\t"<<G[i]<<endl;
+    }}
+    bool compare(GCD A){
+    return getG_sum()>A.getG_sum();
+    }
+};
+int main(){
+    GCD A,B;
+    cout<<"Enter things of A : "<<endl;
+    A.read();
+    cout<<"Enter things of B : "<<endl;
+    B.read();
+    cout<<"=================OUTPUT==================="<<endl;
+    if(A.compare(B)){
+        cout<<"B has minimum GCD G's  : "<<endl;
+        B.display();
+    }
+    else{
+        cout<<"A has minimum GCD G's : "<<endl;
+        A.display();
+    }
+    return 0;
+}
