@@ -1,0 +1,48 @@
+//sheet 3 Q 2
+#include <iostream>
+using namespace std;
+class Student{
+private:
+    string name;
+    float age;
+    int ID;
+    static int counter;
+public:
+    Student(){
+    counter++;
+    ID=counter;
+    }
+    void read(){
+        cout<<"Enter Student name : ";
+        cin>>name;
+        cout<<"Enter Student Age : ";
+        cin>>age;
+    }
+    void display(){
+        cout<<"Student name : "<<name<<", Age = "<<age<<", ID = "<<ID<<endl;
+    }
+    static void display_C(){
+        cout<<"objects counter is = "<<counter-2999<<endl;
+    }
+};
+int Student::counter=2999;
+int main(){
+    Student A[50];
+    int n;
+    do{
+        cout<<"Enter number of students (n<=50) : ";
+        cin>>n;
+    }while(n<=0||n>50);
+    for(int i=0;i<n;i++){
+        cout<<"Enter things for student "<<i+1<<" : \n";
+        A[i].read();
+    }
+    cout<<"========================================OUTPUT======================================\n";
+    for(int i=0;i<n;i++){
+        cout<<"Data of Student "<<i+1<<" : \n";
+        A[i].display();
+        cout<<"----------------------------------------\n";
+    }
+    Student::display_C();
+return 0;
+}
