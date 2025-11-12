@@ -1,0 +1,130 @@
+//sheet 5 Q 1
+#include <iostream>
+using namespace std;
+class Data{
+private:
+    int A[30];
+    double S[30];
+    int n;
+public:
+    long long factorial(int n){
+        if(n<0)
+            n*=-1;
+        if(n==0)
+            return 1;
+        else
+            return n*factorial(n-1);
+    }
+    double nCr(int n,int r){
+        if(n<0)
+            n*=-1;
+        if(r<0)
+            r*=-1;
+        if(r>n)
+            return 0;
+        double ncr = double(factorial(n))/(factorial(n-r)*factorial(r));
+        return ncr;
+    }
+    void read(){
+        do{
+        cout<<"Enter the number of elements (n<=30) : ";
+        cin>>n;
+        }while(n<=0||n>30);
+        cout<<"Enter elements of A[n] : "<<endl;
+        for(int i=0;i<n;i++){
+            cout<<"A["<<i<<"] = ";
+            cin>>A[i];
+        }
+    }
+    void setS(){
+        for(int i=0;i<n;i++){
+            S[i]=0;
+            for(int k=0;k<=i;k++){
+                if(A[k]==0)A[k]+=1;
+                S[i]+=nCr(i+1,k+1)*A[k];
+            }
+        }
+    }
+    double getsum_S(){
+        double s=0;
+        for(int i=0;i<n;i++){
+            s+=S[i];
+        }
+        return s;
+    }
+    void display(){
+        cout<<"The number of elements is : "<<n<<endl;
+        cout<<"\tIndex(i)\t|\tA[i]\t\t|\tS[i]\n";
+        cout<<"------------------------------------------------------------------\n";
+        for(int i=0;i<n;i++){
+        cout<<"\t"<<i<<"\t\t|\t"<<A[i]<<"\t\t|\t"<<S[i]<<endl;
+        }
+        cout<<"------------------------------------------------------------------\n";
+    }
+    friend Data operator+(Data A,int c){
+            Data S;
+            S.n=A.n;
+            for(int i=0;i<S.n;i++){
+                S.A[i]=A.A[i];
+                S.A[i]+=c;
+            }
+            S.setS();
+            return S;
+    }
+    bool operator<(Data A){
+        return this->getsum_S() < A.getsum_S();
+    }
+    bool operator!=(Data A){
+        if(this->n!= A.n)
+            return 1;
+        for(int i=0;i<this->n;i++){
+            if(this->A[i]!=A.A[i])
+                return 1;
+        }
+        return 0;
+    }
+    Data operator+(Data A){
+        Data S;
+        S.n=A.n;
+        for(int i=0;i<A.n;i++){
+            S.A[i]=this->A[i]+A.A[i];
+        }
+        S.setS();
+        return S;
+    }
+};
+int main(){
+    Data W,X,Y,Z;
+    cout<<"Enter things of object  X : \n";
+    X.read();
+    X.setS();
+    cout<<"Enter things of object Y : \n";
+    Y.read();
+    Y.setS();
+    cout<<"Enter a constant to increase each element of A[n] in object X by this constant : ";
+    int c;cin>>c;
+    cout<<"\n====================OUTPUT=====================\n";
+    cout<<"object X : \n";
+    X.display();
+    cout<<"object Y : \n";
+    Y.display();
+    Z=X+c;
+    cout<<"object X after add "<<c<<" to A[n] : \n";
+    Z.display();
+    if(X<Y){
+        cout<<"Object X less than object Y !\n";
+        cout<<"sum = "<<X.getsum_S()<<endl;
+    }
+    else{
+        cout<<"Object Y not less than object X !\n";
+        cout<<"sum = "<<Y.getsum_S()<<endl;
+    }
+    if(X!=Y)
+        cout<<"X.A[n] elements != Y.A[n] elements\n";
+    else
+        cout<<"X.A[n] elements = Y.A[n] elements\n";
+    W=X+Y;
+    cout<<"X.A[n] + Y.A[n] : \n";
+    W.display();    
+    return 0;
+}
