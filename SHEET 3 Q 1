@@ -1,0 +1,41 @@
+//sheet 3 Q 1
+#include <iostream>
+#include <cmath>
+using namespace std;
+class Complex{
+private:
+    int R;
+    int I;
+public:
+    Complex() : R(0),I(0){}
+    Complex(int a,int b) : R(a),I(b) {}
+    Complex(Complex&A) : R(A.R),I(A.I) {}
+    void display(){
+        if(I>=0)
+            cout<<R<<" + "<<I<<"i"<<endl;
+        else
+            cout<<R<<" - "<<-I<<"i"<<endl;
+    }
+    double convert(Complex A){
+       double gg=sqrt(R*R+I*I);
+       return gg;
+    }
+    double average(Complex A,Complex B){
+        return (convert(A)+convert(B))/2;
+    }
+};
+int main(){
+    cout<<"object 1 defined by default constructor : \n";
+    Complex W;
+    W.display();
+    cout<<"object 2 defined by initialized constructor R=5 , I=7 : \n";
+    Complex X(5,7);
+    X.display();
+    cout<<"object 3 defined by initialized constructor R=2 , I=-3 : \n";
+    Complex Y(2,-3);
+    Y.display();
+    cout<<"object 4 defined by copy constructor from object 2 : \n";
+    Complex Z(X);
+    Z.display();
+return 0;
+}
