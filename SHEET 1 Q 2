@@ -1,0 +1,114 @@
+//sheet 1 Q 2
+#include <iostream>
+#include <cmath>
+using namespace std;
+long long fact(int n){
+    if(n<0)
+        n*=-1;
+    if(n==0)
+        return 1;
+    else
+        return n*fact(n-1);
+}
+bool primo(int n){
+    if(n<0)
+        n*=-1;
+    if(n<=1)
+        return 0;
+    bool isprime =1;
+    for(int i=2;i*i<=n;i++){
+        if(n%i==0)
+            isprime = 0 ;
+    }
+    return isprime;
+}
+struct Num{
+    float N[10];
+    int m;
+    string T[10];
+    void read(){
+    cout<<"Enter the number of elements : ";
+    cin>>m;
+    cout<<"Enter elements of N "<<endl;
+    for(int i=0;i<m;i++){
+        cout<<"N["<<i<<"] = ";
+        cin>>N[i];
+    }
+    for(int i=0;i<m;i++){
+        if(primo(int(N[i]))==1)
+            T[i]="Yes";
+        else
+            T[i]="No";
+    }}
+    double sum(){
+    double summ=0;
+    for(int i=0;i<m;i++){
+        if(T[i]=="Yes")
+            summ+=fact(int(N[i]));
+    }
+    return summ;
+    }
+    double product(){
+    double prod=1;
+    for(int i=0;i<m;i++){
+        if(T[i]=="No")
+            prod*=fact(int(N[i]));
+    }
+    return prod;
+    }
+    void display(){
+        cout<<"The number of elements is : "<<m<<endl;
+        cout<<"\tIndex\t\t|\tN value\t\t|\tT value\n";
+        cout<<"--------------------------------------------------------\n";
+        for(int i=0;i<m;i++){
+        cout<<"\t"<<i<<"\t\t|\t"<<N[i]<<"\t\t|\t"<<T[i]<<"\n";
+        }
+        cout<<"--------------------------------------------------------\n";
+        cout<<"function sum = "<<sum()<<endl;
+        cout<<"function product = "<<product()<<endl;
+    }
+    double summation(){
+        double sum=0;
+        for(int i=0;i<m;i++){
+            sum+=N[i];
+        }
+        return sum;
+    }
+    double production(){
+        double prod=1;
+        for(int i=0;i<m;i++){
+            prod*=N[i];
+        }
+        return prod;
+    }
+    bool compare1(Num A){
+    return summation()>A.summation();
+    }
+    double compare2(Num A){
+    return production()>A.production();
+    }
+};
+int main(){
+    Num X,Y;
+    cout<<"Enter things of X : "<<endl;
+    X.read();
+    cout<<"Enter things of Y : "<<endl;
+    Y.read();
+    if(X.compare1(Y)){
+        cout<<"\nX has the max sum \n";
+        X.display();
+    }
+    else{
+        cout<<"\nY has the max sum \n";
+        Y.display();
+    }
+    if(X.compare2(Y)){
+        cout<<"\nY has the minimum product \n";
+        Y.display();
+    }
+    else{
+        cout<<"\nX has the minimum product \n";
+        X.display();
+    }
+    return 0;
+}
