@@ -1,0 +1,72 @@
+//sheet 2 Q 3
+#include <iostream>
+#include <cmath>
+using namespace std;
+long long fact(int n){
+    if(n<0)
+        n*=-1;
+    if(n==0)
+        return 1;
+    else
+        return n*fact(n-1);
+}
+class Series{
+private:
+    float x[40];
+    int n;
+    double S1;
+    double S2;
+public:
+    void read(){
+        do{
+        cout<<"Enter the number of elements (n<=40) : ";
+            cin>>n;
+        }while(n<=0||n>40);
+        cout<<"Enter elements of x : "<<endl;
+        for(int i=0;i<n;i++){
+            cout<<"x["<<i<<"] = ";
+            cin>>x[i];
+        }
+        S1=0;
+        S2=0;
+        for(int i=0;i<n;i++){
+            S1+=(pow(-1,i)(fact(2*i+1)/(sqrt(pow(x[i],2*i+1)+(pow(-1,i)(2*i+1))))));
+            S2+=(pow(-1,i)(fact(2*i+2)/(sqrt(pow(x[i],2*i+2)+(pow(-1,i)(2*i+2))))));
+        }
+    }
+    long getsum(){
+        return S1+S2;
+    }
+    bool compare(Series X){
+        return getsum() == X.getsum();
+    }
+    void display(){
+        cout<<"The number of elements is : "<<n;
+        cout<<"\tIndex\t\t|\tx values\n";
+        cout<<"----------------------------------------------------\n";
+        for(int i=0;i<n;i++){
+            cout<<"\t"<<i<<"\t\t|\t"<<x[i]<<endl;
+        }
+        cout<<"----------------------------------------------------\n";
+        cout<<"S1 = "<<S1<<endl;
+        cout<<"S2 = "<<S2<<endl;
+    }
+};
+int main(){
+    Series A,B;
+    cout<<"Enter Things of object A : "<<endl;
+    A.read();
+    cout<<"Enter Things of object B : "<<endl;
+    B.read();
+    cout<<"==================OUTPUT======================\n";
+    if(A.compare(B)){
+        cout<<"They have equal sum ! "<<endl;
+    }
+    else
+    cout<<"They does not have equal sum !! "<<endl;
+    cout<<"display the data members of object A : \n";
+    A.display();
+    cout<<"display the data members of object B : \n";
+    B.display();
+    return 0;
+}
