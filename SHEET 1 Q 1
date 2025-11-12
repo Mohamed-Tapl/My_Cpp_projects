@@ -1,0 +1,82 @@
+// sheet 1 Q 1
+#include <iostream>
+#include <cmath>
+using namespace std;
+long long fact(int n){
+    if(n<0)
+        n*=-1;
+    if (n==0)
+        return 1;
+    else
+        return(n*fact(n-1));
+}
+double ncr(int n,int r){
+    double ncr = double(fact(n))/(fact(n-r)*fact(r));
+    return ncr;
+}
+struct series{
+    float a;
+    float X[20];
+    double S[20];
+    int n;
+    void read(){
+        cout<<"Enter a : ";
+        cin>>a;
+        cout<<"Enter the number of elements X,S : ";
+        cin>>n;
+        cout<<"Enter elements of X : "<<endl;
+        for(int i=0;i<n;i++){
+            cout<<"X["<<i<<"]";
+            cin>>X[i];
+            cout<<endl;
+        }
+        for(int i=0;i<n;i++){
+                S[i]=0;
+            for(int k=0;k<=i;k++){
+                S[i]+=(ncr(i+1,k)*X[i]*pow(a,i-k+1));
+            }
+        }
+    }
+    double rmaxx(){
+        double maxx=S[0];
+        for(int i=1;i<n;i++){
+            if(S[i]>maxx)
+                maxx=S[i];
+        }
+        return maxx;
+    }
+    void display(){
+        cout<<"\n---------------------------------------------------------------\n";
+        cout<<"\tIndex\t\t|\tX value\t\t|\tS value\n";
+        cout<<"-----------------------------------------------------------------\n";
+        for(int i=0;i<n;i++){
+        cout<<"\t"<<i<<"\t\t|\t"<<X[i]<<"\t\t|\t"<<S[i]<<endl;
+        cout<<"-----------------------------------------------------------------\n";
+        }
+    }
+};
+int main()
+{
+    series A,B;
+    cout<<"Enter things of series A : "<<endl;
+    A.read();
+    cout<<"Enter things of series B : "<<endl;
+    B.read();
+    double max_A=A.rmaxx();
+    double max_B=B.rmaxx();
+    cout<<"The difference between maximum values for A,B : "<<fabs(max_A-max_B)<<endl;
+    if(max_A>max_B){
+        cout<<"\nA has maximum value : "<<endl;
+        A.display();
+    }
+    else if(max_B>max_A){
+        cout<<"\nB has maximum value : "<<endl;
+        B.display();
+    }
+    else{
+        cout<<"\nThe both are equal : "<<endl;
+        A.display();
+        B.display();
+    }
+    return 0;
+}
