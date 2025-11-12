@@ -1,0 +1,111 @@
+// Sheet 5 Q 2
+#include <iostream>
+using namespace std;
+class Matrix{
+private:
+    float M[20][20];
+    int n;
+public:
+    void read(){
+        do{
+            cout<<"Enter the dimension of 2D Matrix (n<=20) : ";
+            cin>>n;
+        }while(n<=0||n>20);
+        cout<<"Enter data members of Matrix M except the last column : \n";
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n-1;j++){
+                cout<<"M["<<i<<"]["<<j<<"] = ";
+                cin>>M[i][j];}
+    }}
+    double summation(int i){
+        double S=0;
+            for(int j=0;j<=n-2;j++){
+                S+=M[i][j];
+            }
+        return S;
+    }
+    void setL_C(){
+        for(int i=0;i<n;i++){
+            M[i][n-1]= summation(i);
+        }
+    }
+    void display(){
+        cout<<"The Matrix M[n][n] in Matrix form : \n";
+        cout<<"\n-------------------------------------------------------------\n";
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                cout<<M[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
+        cout<<"\n-------------------------------------------------------------\n";
+    }
+    Matrix operator-(Matrix A){
+        Matrix R;
+        R.n=A.n;
+        for(int i=0;i<A.n;i++){
+            for(int j=0;j<A.n;j++){
+                R.M[i][j]=M[i][j]-A.M[i][j];
+            }
+        }
+        R.setL_C();
+        return R;
+    }
+    friend Matrix operator*(float c,Matrix A){
+        Matrix P;
+        P.n=A.n;
+        for(int i=0;i<A.n;i++){
+            for(int j=0;j<A.n-1;j++){
+                P.M[i][j]=c*A.M[i][j];
+            }
+        }
+        P.setL_C();
+        return P;
+    }
+    bool operator==(Matrix A){
+        for(int i=0;i<A.n;i++){
+                if(M[i][n-1]!=A.M[i][n-1])
+                    return 0;
+        }
+                return 1;
+    }
+    bool operator>(Matrix A){
+       double sum1=0,sum2=0;
+       for(int i=0;i<A.n;i++){
+        sum1+=M[i][A.n-1];
+        sum2+=A.M[i][A.n-1];
+       }
+       return sum1>sum2;
+    }
+};
+int main(){
+    Matrix W,X,Y,Z;
+    cout<<"Enter things for object X : \n";
+    X.read();
+    X.setL_C();
+    cout<<"Enter things for object Y : \n";
+    Y.read();
+    Y.setL_C();
+    cout<<"Enter a constant to multiply each element in the matrix X.M[n][n] (except the last column) : ";
+    int c;cin>>c;
+    cout<<"================================================OUTPUT===================================================\n";
+    Z=c*X;
+    cout<<"object after multiply by "<<c<<" : \n";
+    Z.display();
+    cout<<"X.M[n][n] - Y.M[n][n] : \n";
+    W=X-Y;
+    W.display();
+    if(X==Y)
+        cout<<"X.M[n][n] = Y.M[n][n] \n";
+    else
+        cout<<"X.M[n][n] != Y.M[n][n] \n";
+    if(X>Y){
+        cout<<"X is the max object ! \n";
+        X.display();
+    }
+    else{
+        cout<<"Y is the max object ! \n";
+        Y.display();
+    }
+return 0;
+}
