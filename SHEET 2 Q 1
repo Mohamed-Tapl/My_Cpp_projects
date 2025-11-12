@@ -1,0 +1,60 @@
+//sheet 2 Q 1
+#include <iostream>
+using namespace std;
+class Toy{
+   private:
+    string name;
+    float price;
+    float tax;
+    float Net_price;
+   public:
+    void read(){
+        cout<<"Enter The Toy name : ";
+        cin>>name;
+        cout<<"Enter Toy Price : ";
+        cin>>price;
+        cout<<"Enter Toy tax on the price : ";
+        cin>>tax;
+        Net_price=price+tax;
+    }
+    bool getNet_price(){
+        return Net_price>50;
+    }
+    void display(){
+        cout<<"\n----------------------------------------------------------------\n";
+        cout<<"The Toy name is : "<<name<<endl;
+        cout<<"The Toy price is : "<<price<<endl;
+        cout<<"The Toy Tax is : "<<tax<<endl;
+        cout<<"The Net price is : "<<Net_price<<endl;
+        cout<<"\n----------------------------------------------------------------\n";
+    }
+    Toy compare(Toy A){
+        if(this->Net_price>A.Net_price)
+            return *this;
+        else
+            return A;
+    }
+};
+int main(){
+    int n;
+    do {
+        cout << "Enter the number of Toys (must be > 0 and <= 50): ";
+        cin >> n;
+    } while (n <= 0 || n > 50);
+    Toy X[50];
+    for(int i=0;i<n;i++){
+        cout<<"Enter the Elements of Element "<<i+1<<" : "<<endl;
+        X[i].read();
+    }
+    cout<<"====================OUTPUT====================="<<endl;
+    cout<<"Display the Toys with Net price > 50 \n";
+    for(int i=0;i<n;i++){
+        if( X[i].getNet_price() == 1 )
+            X[i].display();
+        cout<<endl;
+    }
+    Toy max_object = X[0].compare(X[n-1]);
+    cout << "The object with the maximum net price is:" << endl;
+    max_object.display();
+    return 0;
+}
