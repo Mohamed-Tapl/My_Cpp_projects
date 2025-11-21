@@ -1,0 +1,114 @@
+//sheet 4 HOME WORK
+#include <iostream>
+using namespace std;
+class SerY;
+class SerX{
+    float SX[30];
+    float x[30];
+    int n;
+public:
+    void read(){
+        do{
+        cout<<"Enter the number of elements (n<=30) ";
+        cin>>n;
+        }while(n<=0||n>30);
+        cout<<"Enter elements of x[i] \n";
+        for(int i=0;i<n;i++){
+            cout<<"x["<<i<<"] = ";
+            cin>>x[i];
+        }
+    }
+    void setSX(){
+        double s=0;
+        for(int i=0;i<n;i++){
+          SX[i]=0;
+            for(int j=0;j<=i;j++){
+                SX[i]+=(x[j]/(i+j+1));
+            }}
+    }
+    void display(){
+        cout<<"the number of elements is : "<<n<<endl;
+        cout<<"data members in tabular form \n";
+        cout<<"\tIndex\t\t|\tSX[i]\t\t|\tx[i]\n";
+        cout<<"----------------------------------------------------------------------\n";
+        for(int i=0;i<n;i++){
+            cout<<"\t"<<i<<"\t\t|\t"<<SX[i]<<"\t\t|\t"<<x[i]<<endl;
+        }
+        cout<<"----------------------------------------------------------------------\n";
+    }
+    friend class SerY;
+};
+    class SerY{
+        float SY[30];
+        int b;
+        float y[30];
+        SerX A;
+    public:
+        void setA(SerX B){
+            A=B;
+        }
+        void read(){
+            cout<<"Enter element b : ";
+            cin>>b;
+            for(int i=0;i<A.n;i++){
+                y[i]=b*A.x[i];
+            }
+            for(int i=0;i<A.n;i++){
+                SY[i]=y[i]+A.SX[i];
+            }
+        }
+        double MaxSY(){
+            double maxx=SY[0];
+            for(int i=0;i<A.n;i++){
+                if(SY[i]>maxx)
+                    maxx=SY[i];
+            }
+            return maxx;
+        }
+        double MaxSX(){
+            double maxi=A.SX[0];
+            for(int i=0;i<A.n;i++){
+                if(A.SX[i]>maxi)
+                    maxi=A.SX[i];
+            }
+            return maxi;
+        }
+        double compare(){
+            if(MaxSX()>MaxSY())
+                return MaxSX();
+            else
+                return MaxSY();
+        }
+        double avg(){
+            double avv=0;
+            avv=(A.SX[0]+A.SX[A.n-1]+SY[0]+SY[A.n-1])/4;
+            return avv;
+        }
+        void display(){
+            cout<<"element b = "<<b<<endl;
+            cout<<"data members in tabular form \n";
+            cout<<"\tIndex\t\t|\tSY[i]\t\t|\ty[i]\n";
+            cout<<"----------------------------------------------------------------------\n";
+            for(int i=0;i<A.n;i++){
+                cout<<"\t"<<i<<"\t\t|\t"<<SY[i]<<"\t\t|\t"<<y[i]<<endl;
+            }
+            cout<<"----------------------------------------------------------------------\n";
+        }};
+int main(){
+    SerX X;
+    SerY Y;
+    cout<<"Enter things of X : \n";
+    X.read();
+    X.setSX();
+    cout<<"display object X : \n";
+    X.display();
+    cout<<"Enter things of object Y : \n";
+    Y.setA(X);
+    Y.read();
+    cout<<"display object Y : \n";
+    Y.display();
+    cout<<"Compare between the max value in SX and SY : \n";
+    cout<<Y.compare()<<endl;
+    cout<<"display average function : "<<Y.avg()<<endl;
+    return 0;
+}
