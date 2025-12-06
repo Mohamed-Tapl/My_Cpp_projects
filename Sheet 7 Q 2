@@ -1,0 +1,122 @@
+//sheet 7 Q 2
+#include<iostream>
+#include<cmath>
+using namespace std;
+class Data1{
+    string S1;
+    double D1[20];
+    int a;
+    int n;
+public:
+    void read(){
+        cout<<"Enter S1 : ";
+        cin>>S1;
+        do{
+            cout<<"Enter the number of elements of D1 (n<20) : ";
+            cin>>n;
+        }while(n<0||n>20);
+        cout<<"Enter data of D1 : \n";
+        for(int i=0;i<n;i++){
+            cout<<"D1["<<i<<"] = ";
+            cin>>D1[i];
+        }
+        cout<<"Enter the number a : ";
+        cin>>a;
+    }
+    double Sum(){
+        double soso=0;
+        for(int i=0;i<n;i++){
+            for(int j=i;j<=i+1;j++){
+                if(int(D1[i])%a==0)
+                    soso+=pow(D1[i],2*(j+1));
+                else
+                    soso+=pow(D1[i],j+1);
+            }
+        }
+        return soso;
+    }
+    void display(){
+        cout<<"the S1 : "<<S1<<endl;
+        cout<<"element a = "<<a<<endl;
+        cout<<"the number of elements = "<<n<<endl;
+        cout<<"the D1 data members : \n";
+        for(int i=0;i<n;i++){
+            cout<<"D1["<<i<<"] = "<<D1[i]<<endl;
+        }
+    }
+};
+class Data2{
+    string S2;
+    double D2[20];
+    int b;
+    int m;
+public:
+     void read(){
+        cout<<"Enter S2 : ";
+        cin>>S2;
+        do{
+            cout<<"Enter the number of elements of D2 (m<20) : ";
+            cin>>m;
+        }while(m<0||m>20);
+        cout<<"Enter data of D2 : \n";
+        for(int i=0;i<m;i++){
+            cout<<"D2["<<i<<"] = ";
+            cin>>D2[i];
+        }
+        cout<<"Enter the number b : ";
+        cin>>b;
+    }
+    double Sum(){
+        double koko=0;
+        for(int i=0;i<m;i++){
+            for(int j=i;j<=i+1;j++){
+                if(D2[i]>b)
+                    koko+=pow(D2[i],2*(j+1));
+                else
+                    koko+=pow(D2[i],j+1);
+            }
+        }
+        return koko;
+    }
+    void display(){
+        cout<<"the S2 : "<<S2<<endl;
+        cout<<"element b = "<<b<<endl;
+        cout<<"the number of elements = "<<m<<endl;
+        cout<<"the D2 data members : \n";
+        for(int i=0;i<m;i++){
+            cout<<"D2["<<i<<"] = "<<D2[i]<<endl;
+        }
+    }
+};
+class Data : public Data1, public Data2{
+    string ND;
+    int T_sum;
+public:
+    void read(){
+        Data1::read();
+        Data2::read();
+        cout<<"Enter ND : ";
+        cin>>ND;
+    }
+    void setT_sum(){
+        T_sum=Data1::Sum()+Data2::Sum();
+    }
+    void display(){
+        Data1::display();
+        Data2::display();
+        cout<<"the ND : "<<ND<<endl;
+        cout<<"T sum : "<<T_sum<<endl;
+    }
+};
+int main(){
+    Data A,B;
+    cout<<"Enter things of object A : \n";
+    A.read();
+    A.setT_sum();
+    A.display();
+    cout<<"Enter things of object B : \n";
+    B.read();
+    B.setT_sum();
+    B.display();
+return 0;
+}
