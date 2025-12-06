@@ -1,0 +1,100 @@
+//sheet 7 Q 1
+#include<iostream>
+using namespace std;
+struct Course{
+    string C_name;
+    float Degree;
+    int Credit;
+    void read1(){
+        cout<<"Enter course name : ";
+        cin>>C_name;
+        cout<<"Enter degree : ";
+        cin>>Degree;
+        cout<<"Enter Credit hours : ";
+        cin>>Credit;
+    }
+    void display(){
+        cout<<"course name : "<<C_name<<endl;
+        cout<<"Degree : "<<Degree<<endl;
+        cout<<"Credit hours : "<<Credit<<endl;
+    }
+};
+class Level{
+protected:
+    Course L[5];
+public:
+    void read(){
+        cout<<"Enter information : \n";
+        for(int i=0;i<5;i++){
+            cout<<"Course number "<<i+1<<" : \n";
+            L[i].read1();
+        }
+    }
+    void print(){
+        for(int i=0;i<5;i++){
+            L[i].display();
+            cout<<"--------------------------\n";
+        }
+    }
+};
+class student : public Level{
+    string name;
+    int ID;
+    float total_d;
+    int total_c;
+    string GPA;
+public:
+    void read(){
+        Level::read();
+        cout<<"Enter your name : ";
+        cin>>name;
+        cout<<"Enter your ID : ";
+        cin>>ID;
+        total_d=0;
+        for(int i=0;i<5;i++){
+            total_d+=L[i].Degree;
+        }
+        total_c=0;
+        for(int i=0;i<5;i++){
+            total_c+=L[i].Credit;
+        }
+    }
+    void setGPA(){
+        double avg=total_d/5;
+        if(avg>=92)
+            GPA="A";
+        else if(avg>=84)
+            GPA="B+";
+        else if(avg>=80)
+            GPA="B";
+        else if(avg>=75)
+            GPA="C+";
+        else if(avg>=65)
+            GPA="C";
+        else if(avg>=60)
+            GPA="D";
+        else 
+            GPA="F";
+    }
+    void print(){
+        Level::print();
+        cout<<"name :"<<name<<" ID : "<<ID<<" Total degrees : "<<total_d<<" total credits : "<<total_c<<" GPA : "<<GPA<<endl;
+    }
+};
+int main(){
+    int n;
+    cout<<"Enter the number of students : ";
+    cin>>n;
+    student A[50];
+    for(int i=0;i<n;i++){
+        cout<<"student "<<i+1<<" : \n";
+        A[i].read();
+        A[i].setGPA();
+    }
+    cout<<"================================OUTPUT===========================================\n";
+    for(int i=0;i<n;i++){
+        cout<<"student "<<i+1<<" : \n";
+        A[i].print();
+    }
+return 0;
+}
