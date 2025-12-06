@@ -1,0 +1,107 @@
+//sheet 6 Q 1
+#include<iostream>
+#include<cmath>
+using namespace std;
+class Data{
+private:
+    int D1[20];
+    double D2[20];
+    int x;
+    int n;
+public:
+    friend istream&operator>>(istream&in , Data&a){
+        in>>a.x;
+        in>>a.n;
+        for(int i=0;i<a.n;i++){
+            in>>a.D1[i];
+        }
+        return in;
+    }
+    void setD2(){
+        for(int i=0;i<n;i++){
+            D2[i]=0;
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                if(D1[j]==0)
+                D1[j]+=1;
+                D2[i]+=pow(x,j)/D1[j];
+            }
+        }
+    }
+    friend ostream&operator<<(ostream&out,Data&A){
+        for(int i=0;i<A.n;i++){
+            out<<A.D1[i]<<"  ";
+        }
+        return out;
+    }
+    double operator [](int a){
+        return D2[a];
+    }
+    Data operator -= (Data A){
+        for(int i=0;i<n;i++){
+            D1[i]-=A.D1[i];
+        }
+        setD2();
+        return *this;
+    }
+    Data operator ++ (int){
+        Data t=*this;
+        for(int i=0;i<n;i++){
+            D1[i]++;
+        }
+        setD2();
+        return t;
+    }
+    Data operator ++ (){
+        for(int i=0;i<n;i++){
+            D1[i]++;
+        }
+        setD2();
+        return *this;
+    }
+    bool operator >=(Data A){
+        for(int i=0;i<n;i++){
+            if(D2[i]<A.D2[i])
+                return 0;
+        }
+        return 1;
+    }
+    double summ(){
+        double s=0;
+        for(int i=0;i<n;i++){
+            s+=D1[i];
+        }
+        return s;
+    }
+    friend Data compare(Data X,Data Y);
+};
+    Data compare(Data X,Data Y){
+        if(X.summ()>Y.summ())
+                return X;
+            else
+                return Y;
+        }
+int main(){
+    Data A,B,C;
+    cin>>A;
+    cin>>B;
+    cin>>C;
+    A.setD2();
+    B.setD2();
+    C.setD2();
+    cout<<A;
+    cout<<B;
+    cout<<C;
+    cout<<A[2];
+    B-=C;
+    A++;
+    B++;
+    if(B>=A)
+        cout<<"object B is bigger \n";
+    else
+        cout<<"object A is bigger \n";
+    Data Maxop=compare(A,B);
+    cout<<Maxop;
+return 0;
+}
