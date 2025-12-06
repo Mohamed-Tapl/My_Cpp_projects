@@ -1,0 +1,89 @@
+//sheet 7 Q 3
+#include<iostream>
+using namespace std;
+class Rectangle{
+    float Dim[10][2];
+protected:
+    int n;
+public:
+    void read(){
+        cout<<"Enter the dimension of rows : ";
+        cin>>n;
+        cout<<"Enter matrix Dim : \n";
+        for(int i=0;i<n;i++){
+                cout<<"Row "<<i<<" : "<<endl;
+            for(int j=0;j<2;j++){
+                cout<<"col "<<j<<" = ";
+                cin>>Dim[i][j];
+            }
+        }
+    }
+    double Area(int i){
+        return(Dim[i][0]*Dim[i][1]);
+    }
+    void print(){
+        cout<<"--------------------------\n";
+        cout<<"||row||col|| = || value ||\n";
+        cout<<"--------------------------\n";
+        for(int i=0;i<n;i++){
+            for(int j=0;j<2;j++){
+                cout<<"|| "<<i<<" || "<<j<<" || = ||   "<<Dim[i][j]<<"   ||\n";
+            }
+            cout<<"--------------------------\n";
+        }
+    }
+};
+class RArea : public Rectangle{
+protected:
+    double RA[10];
+public:
+    void setRA(){
+        for(int i=0;i<n;i++){
+            RA[i]=Area(i);
+        }
+    }
+    void print(){
+        cout<<"The values of RA[i] : \n";
+        cout<<"i | value\n";
+        for(int i=0;i<n;i++){
+            cout<<i<<" | "<<RA[i]<<endl;
+        }
+        cout<<"------------------\n";
+    }
+};
+class Pvolum : public RArea{
+    float H[10];
+    float V[10];
+public:
+    void read(){
+        Rectangle::read();
+        cout<<"Enter H[i] : \n";
+        for(int i=0;i<n;i++){
+            cout<<"H["<<i<<"] = ";
+            cin>>H[i];
+        }
+    }
+     void setdata(){
+        for(int i=0;i<n;i++){
+            V[i]=(H[i]*RA[i]);
+        }
+    }
+    void print(){
+        Rectangle::print();
+        RArea::print();
+        cout<<"The values of V[i] : \n";
+        cout<<"i || value \n";
+        cout<<"------------------\n";
+        for(int i=0;i<n;i++){
+            cout<<i<<" || "<<V[i]<<endl;
+        }
+    }
+};
+int main(){
+    Pvolum A;
+    A.read();
+    A.setRA();
+    A.setdata();
+    A.print();
+return 0;
+}
