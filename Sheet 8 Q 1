@@ -1,0 +1,89 @@
+//sheet 8 Q1
+#include<iostream>
+using namespace std;
+class Base{
+protected:
+    int B[30][30];
+    int n;
+    int a;
+public:
+    void read(){
+    do{
+        cout<<"Enter dimension of matrix B (n<=30) : ";
+        cin>>n;
+    }while(n<=0||n>30);
+    cout<<"Enter matrix B[n][n] : \n";
+    for(int i=0;i<n;i++){
+            cout<<"Row "<<i<<" : \n";
+        for(int j=0;j<n-1;j++){
+            cout<<"B["<<i<<"]["<<j<<"] = ";
+            cin>>B[i][j];
+            }
+        }
+    cout<<"Enter element a : ";
+    cin>>a;
+    }
+    bool check(int no){
+        return(no%a==0);
+    }
+    int Max(int i){
+        int M=B[i][0];
+        for(int j=0;j<=n-2;j++){
+            if(B[i][j]>M)
+            M=B[i][j];
+        }
+        return M;
+    }
+    void setL_C(){
+        for(int i=0;i<n;i++){
+            B[i][n-1]=Max(i);
+        }
+    }
+    virtual double average(){
+        double s=0;
+        for(int i=0;i<n;i++){
+            s+=B[i][n-1];
+        }
+        return s/n;
+    }
+    void display(){
+        cout<<"The average is : "<<average()<<endl;
+    }
+};
+class Drive : public Base {
+    int D[30];
+public:
+    long long factorial(int n){
+        if(n<=1)
+            return 1;
+        else
+            return n*factorial(n-1);
+    }
+    void setD(){
+        for(int i=0;i<n;i++){
+            D[i]=factorial(B[i][n-1]);
+        }
+    }
+    double average(){
+        double s=0;
+        for(int i=0;i<n;i++){
+            s+=D[i];
+        }
+        return s/n;
+    }
+};
+int main(){
+    Base A;
+    Drive B;
+    Base *p;
+    p = &A;
+    p ->read();
+    p ->setL_C();
+    p ->display();
+    p = &B;
+    p ->read();
+    p ->setL_C();
+    B.setD();
+    p ->display();
+return 0;
+}
