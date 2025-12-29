@@ -1,0 +1,159 @@
+//SHEET 8 Q 2
+#include<iostream>
+#include<cmath>
+using namespace std;
+class Base{
+protected:
+    int B[30];
+    int n;
+public:
+    void read(){
+        do{
+            cout<<"Enter number of data of B[n] (n<30) : ";
+            cin>>n;
+        }while(n<=0||n>30);
+        cout<<"Enter data of B[n] : \n";
+        for(int i=0;i<n;i++){
+            cout<<"B["<<i<<"] = ";
+            cin>>B[i];
+        }
+    }
+    virtual int Max(){
+        int maxx = B[0];
+        for(int i=0;i<n;i++){
+            if(B[i]>maxx)
+                maxx=B[i];
+        }
+        return maxx;
+    }
+    virtual long long fact(){
+        int m = Max();
+        long long f=1;
+        for(int i=1;i<=m;i++){
+            f*=i;
+        }
+        return f;
+    }
+    void display(){
+        cout<<"Factorial of the max element is = "<<fact()<<endl;
+    }
+};
+class Drive1 :virtual public Base{
+protected:
+    int D1[30];
+public:
+    void setD1(){
+        for(int i=0;i<n;i++){
+                D1[i]=0;
+            for(int j=1;j<=i+1;j++){
+                if(B[i]%2==0)
+                    D1[i]+=pow(B[i],2);
+                else
+                    D1[i]+=pow(B[i],3);
+            }
+        }
+    }
+    int Max(){
+        int maxx=D1[0];
+        for(int i=0;i<n;i++){
+            if(D1[i]>maxx)
+                maxx=D1[i];
+        }
+        return maxx;
+    }
+    long long fact(){
+        int m = Max();
+        long long f=1;
+        for(int i=1;i<=m;i++){
+            f*=i;
+        }
+        return f;
+    }
+};
+class Drive2 :virtual public Base{
+protected:
+    int D2[30];
+public:
+     void setD2(){
+        for(int i=0;i<n;i++){
+                D2[i]=1;
+            for(int j=1;j<=i+1;j++){
+                if(B[i]%2==0)
+                    D2[i]*=pow(B[i],2);
+                else
+                    D2[i]*=pow(B[i],3);
+            }
+        }
+    }
+    int Max(){
+        int maxx=D2[0];
+        for(int i=0;i<n;i++){
+            if(D2[i]>maxx)
+                maxx=D2[i];
+        }
+        return maxx;
+    }
+    long long fact(){
+        int m = Max();
+        long long f=1;
+        for(int i=1;i<=m;i++){
+            f*=i;
+        }
+        return f;
+    }
+};
+class Drive : public Drive1,public Drive2{
+protected:
+    int D[3];
+public:
+    void setD(){
+        setD1();
+        setD2();
+        D[0]=Base::Max();
+        D[1]=Drive1::Max();
+        D[2]=Drive2::Max();
+    }
+    int Max(){
+        int maxx=D[0];
+        for(int i=0;i<3;i++){
+            if(D[i]>maxx)
+                maxx=D[i];
+        }
+        return maxx;
+    }
+    long long fact(){
+        long s=0;
+        for(int i=0;i<3;i++){
+            s+=D[i];
+        }
+        int m = s;
+        long long f=1;
+        for(int i=1;i<=m;i++){
+            f*=i;
+        }
+        return f;
+    }
+};
+int main(){
+    Base A;
+    Drive1 B;
+    Drive2 D;
+    Drive C;
+    Base* p;
+    p=&A;
+    p->read();
+    p->display();
+    p=&B;
+    p->read();
+    B.setD1();
+    p->display();
+    p=&D;
+    p->read();
+    D.setD2();
+    p->display();
+    p=&C;
+    p->read();
+    C.setD();
+    p->display();
+return 0;
+}
