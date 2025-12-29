@@ -1,0 +1,128 @@
+//SHEET 4 Q 2
+#include<iostream>
+using namespace std;
+bool prime(int n){
+    if(n<=1)
+        return 0;
+    bool isprime = 1;
+    for(int i=2;i*i<=n;i++){
+        if(n%i==0)
+            isprime=0;
+    }
+    return isprime;
+}
+class YData;
+class XData{
+private:
+    float X[20][20];
+    int n;
+public:
+    void read(){
+        do{
+            cout<<"Enter the number of elements of X[n][n] (n<=20) : ";
+            cin>>n;
+        } while( n<=0 || n>20 ) ;
+        for(int i=0;i<n-1;i++){
+                cout<<"ROW "<<i<<endl;
+            for(int j=0;j<n;j++){
+                cout<<"X["<<i<<"]["<<j<<"] = ";
+                cin>>X[i][j];
+            }
+        }
+    }
+    float rmec(int j){
+        float maxx=X[0][j];
+        for(int i=0;i<n-1;i++){
+            if(X[i][j]>maxx)
+                maxx=X[i][j];
+        }
+        return maxx;
+    }
+    void set_LR(){
+        for(int i=0;i<n;i++){
+            X[n-1][i]=rmec(i);
+        }
+    }
+    double sum_P(){
+        double s=0;
+        for(int j=0;j<n;j++){
+            if(prime(X[n-1][j]))
+                s+=X[n-1][j];
+        }
+        return s;
+    }
+    void display(){
+        cout<<"|\ti Index\t|\tj Index\t|\tX[i][j] value\t|\n";
+        for(int i=0;i<n;i++){
+                cout<<"ROW "<<i<<endl;
+            for(int j=0;j<n;j++){
+                cout<<"|\t"<<i<<"\t|\t"<<j<<"\t|\t"<<X[i][j]<<"\t|\n";
+            }
+        }
+        cout<<"---------------------------------------------------------------\n";
+    }
+    friend bool compare(XData X,YData Y);
+    friend double Ravg(XData X,YData Y);
+};
+class YData{
+private:
+    float Y[20];
+    int m;
+public:
+    void read(){
+        do{
+            cout<<"Enter the number of elements of Y[m] (m<20) : ";
+            cin>>m;
+        } while ( m <= 0 || m > 20 ) ;
+        cout<<"Enter elements of Y["<<m<<"] : \n";
+        for(int i=0;i<m;i++){
+            cout<<"Y["<<i<<"] = ";
+            cin>>Y[i];
+        }
+    }
+    double sum_P(){
+        double s=0;
+        for(int i=0;i<m;i++){
+            if(prime(Y[i]))
+                s+=Y[i];
+        }
+        return s;
+    }
+    void display(){
+        cout<<"data members of Y[m] : \n";
+        for(int i=0;i<m;i++){
+            cout<<"Y["<<i<<"] = "<<Y[i]<<endl;
+        }
+    }
+    friend bool compare(XData X,YData Y);
+    friend double Ravg(XData X,YData Y);
+};
+    bool compare(XData X,YData Y){
+        return(X.sum_P()<Y.sum_P());
+    }
+    double Ravg(XData X,YData Y){
+        double avg;
+        avg=(X.sum_P()+Y.sum_P())/2;
+        return avg;
+    }
+int main(){
+    XData X;
+    cout<<"Enter Data for an object from XData : \n";
+    X.read();
+    X.set_LR();
+    cout<<"-----------------------------------------------------------------------\n";
+    cout<<"Enter Data for an object from YData : \n";
+    YData Y;
+    Y.read();
+    cout<<"-----------------------------------------------------------------------\n";
+    if(compare(X,Y)){
+        cout<<"Object XData has MIN sum : \n";
+        X.display();
+    }
+    else{
+        cout<<"Object YData has MIN sum : \n";
+        Y.display();
+    }
+    cout<<"The average between object's sum is : "<<Ravg(X,Y)<<endl;
+return 0;
+}
