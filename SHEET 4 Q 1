@@ -1,0 +1,84 @@
+//SHEET 4 Q 1
+#include<iostream>
+#include <algorithm>
+#include<cmath>
+using namespace std;
+class SER{
+private:
+    int x;
+    int A[20];
+    double R[20];
+    int n;
+public:
+    void read(){
+        cout<<"Enter x :";
+        cin>>x;
+        do{
+            cout<<"Enter the number of elements of A,R (n<=20) : ";
+            cin>>n;
+        } while( n<=0 || n>20 );
+        cout<<"Enter data of A[n] : \n";
+        for(int i=0;i<n;i++){
+            cout<<"A["<<i<<"] = ";
+            cin>>A[i];
+        }
+        for(int i=0;i<n;i++){
+                R[i]=0;
+            for(int j=0;j<i+1;j++){
+                R[i]+=A[j]*pow(x,j);
+            }
+        }
+    }
+    void display(){
+        cout<<"Data members in tabular form : \n";
+        cout<<"|\tIndex\t|\tA value\t|\tR value"<<"\t|\n";
+        for(int i=0;i<n;i++){
+        cout<<"|\t"<<i<<"\t|\t"<<A[i]<<"\t|\t"<<R[i]<<"\t|\n";
+        }
+    }
+    //selection sort
+    friend void selection_sort(SER &A){
+        for(int i=0;i<A.n;i++){
+            int minn=A.A[i];
+            int index=i;
+            for(int j=i;j<A.n;j++){
+                if(A.A[j]<A.A[i]){
+                minn=A.A[j];
+                index=j;}
+            }
+            swap(A.A[i],A.A[index]);
+        }
+    }
+    friend double average(SER X){
+        double maxx=X.R[0];
+        double minn=X.R[0];
+        for(int i=0;i<X.n;i++){
+            if(X.R[i]>maxx)
+                maxx=X.R[i];
+            if(X.R[i]<minn)
+                minn=X.R[i];
+        }
+        return (maxx+minn)/2;
+    }
+    friend SER compare(SER A,SER B){
+        if(average(A)>average(B))
+            return A;
+        else
+            return B;
+    }
+};
+int main(){
+    SER X,Y;
+    cout<<"Enter data for object X : \n";
+    X.read();
+    selection_sort(X);
+    cout<<"----------------------------------------------------------------\n";
+    cout<<"Enter data for object Y : \n";
+    Y.read();
+    selection_sort(Y);
+    SER Z = compare(X,Y);
+    cout<<"----------------------------------------------------------------\n";
+    cout<<"Display the object with the max average : \n";
+    Z.display();
+return 0;
+}
