@@ -1,0 +1,53 @@
+//SHEET 8 Q 3
+#include<iostream>
+using namespace std;
+class Shape{
+protected:
+    float L;
+    float H;
+public:
+    void read(){
+        cout<<"Enter Length = ";
+        cin>>L;
+        cout<<"Enter Hight = ";
+        cin>>H;
+    }
+    virtual double Area()= 0;
+    void display(){
+        cout<<"Area = "<<Area()<<endl;
+    }
+};
+class Square :virtual public Shape{
+public:
+    double Area(){
+        return L*L;
+    }
+};
+class triangle :virtual public Shape{
+public:
+    double Area(){
+        return ((0.5*L)*H);
+    }
+};
+class Sqpyramid : public Square,public triangle{
+    public:
+    double Area(){
+        return (Square::Area()+4*(triangle::Area()));
+    }
+};
+int main(){
+    Shape*p[3];
+    Square B;
+    triangle C;
+    Sqpyramid D;
+    p[0]=&B;
+    p[1]=&C;
+    p[2]=&D;
+    for(int i=0;i<3;i++){
+        cout<<"Enter Data : \n";
+        p[i]->read();
+        cout<<"output : \n";
+        p[i]->display();
+    }
+return 0;
+}
