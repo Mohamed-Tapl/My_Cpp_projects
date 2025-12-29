@@ -1,0 +1,108 @@
+//SHEET 6 Q 2
+#include<iostream>
+#include<cmath>
+using namespace std;
+class Matrix{
+private:
+    double P[20][20];
+    int a;
+    int n;
+public:
+    friend istream&operator>>(istream&in,Matrix&A){
+        in>>A.a;
+        in>>A.n;
+        for(int i=0;i<A.n-1;i++){
+            for(int j=0;j<A.n;j++){
+                in>>A.P[i][j];
+            }
+        }
+        return in;
+    }
+    void setL_R(){
+        for(int i=0;i<=n-1;i++){
+                P[n-1][i]=0;
+            for(int k=0;k<=n-2;k++){
+                P[n-1][i]+=pow(a,k)*P[k][i];
+            }
+        }
+    }
+    friend ostream&operator<<(ostream&out,Matrix&A){
+        for(int i=0;i<A.n-1;i++){
+            for(int j=0;j<A.n;j++){
+                out<<A.P[i][j]<<"   ";
+            }
+        }
+        return out;
+    }
+
+    double operator[](int m){
+        return P[n-1][m];
+    }
+    Matrix operator+=(Matrix X){
+        for(int i=0;i<X.n;i++){
+            for(int j=0;j<X.n;j++){
+                P[i][j]+=X.P[i][j];
+            }
+        }
+        return *this;
+    }
+    //postfix
+    Matrix operator--(int){
+        Matrix t=*this;
+        for(int i=0;i<t.n;i++){
+            for(int j=0;j<t.n;j++){
+                P[i][j]--;
+            }
+        }
+        return t;
+    }
+    //prefix(primo)
+    Matrix operator--(){
+        for(int i=0;i<this->n;i++){
+            for(int j=0;j<this->n;j++){
+                this->P[i][j]--;
+            }
+        }
+        return *this;
+    }
+    bool operator<(Matrix X){
+        double s1=0;
+        double s2=0;
+        for(int i=0;i<n;i++){
+            s1+=P[n-1][i];
+            s2+=X.P[n-1][i];
+        }
+        return (s1<s2);
+    }
+    friend Matrix compare(Matrix A,Matrix B);
+};
+    Matrix compare(Matrix A,Matrix B){
+        double s1=0,s2=0;
+        for(int i=0;i<A.n;i++){
+            s1+=A.P[A.n-1][i];
+            s2+=B.P[B.n-1][i];
+        }
+        if(s1<s2)
+            return A;
+        else
+            return B;
+    }
+int main(){
+    Matrix X,Y;
+    cin>>X;
+    X.setL_R();
+    cin>>Y;
+    Y.setL_R();
+    cout<<X;
+    X[2];
+    X+=Y;
+    X--;
+    --Y;
+    if(X<Y)
+        cout<<X;
+    else
+        cout<<Y;
+    Matrix Z = compare(X,Y);
+    cout<<Z;
+return 0;
+}
